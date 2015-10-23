@@ -1,0 +1,24 @@
+html, body{position: relative; height: 100%;}
+body{background: #fff; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 14px; color: #000; margin: 0; padding: 0;}
+
+/* CLEAR FIX*/
+.clearfix:after {content: ".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix {display:inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix { height:1%;}
+.clearfix {display:block;}
+/* End hide from IE-mac */
+
+/* //Common */
+
+
+/* //iPhone 5 */
+@media screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2){
+
+}
+
+/* //iPhone 6 */
+@media screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) {
+
+}
+

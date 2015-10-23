@@ -1,0 +1,42 @@
+<title>Change password</title>
+<?php include 'templates/admin/menu.html';?>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<form class="form-horizontal" id="form-admin-updpwd" method="post">
+				<div class="control-group">
+					<label class="control-label" for="input-username">Username</label>
+					<div class="controls">
+						<input id="input-username" name="username" type="text" value="admin" readonly="readonly" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input-password">Current password</label>
+					<div class="controls">
+						<input id="input-oldpassword"  name="oldpwd" type="password"/>
+					</div>
+				</div>
+                <div class="control-group">
+                    <label class="control-label" for="input-password">New password</label>
+                    <div class="controls">
+                        <input id="input-password" name="password" type="password"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="input-password">Confirm password</label>
+                    <div class="controls">
+                        <input id="input-truepassword" name="truepassword" type="password"/>
+                    </div>
+                </div>
+				
+				<div class="control-group">
+					<div class="controls">
+						<button type="button" class="btn btn-primary" id="but-submit-updpwd">Submit</button>
+                       <!-- <button type="reset" class="btn btn-primary">Reset</button>-->
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

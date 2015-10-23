@@ -1,0 +1,59 @@
+<title>Statistics</title>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="navbar">
+				<div class="navbar-inner">
+					<div class="container-fluid">
+						<a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a> <a href="javascript:;" class="brand">Admin Statistics</a>
+						<div class="nav-collapse collapse navbar-responsive-collapse">
+							<ul class="nav">
+								<li class="active">
+									<a href="<?=APP_URL?>admin.php/backend">Statistics for Sharing and external chain</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<table class="table table-condensed table-hover">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>Type</th>
+						<!--<th>URL</th>-->
+						<th>Number</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+						if(isset($list) && count($list) > 0){
+					?>
+					<?php
+						$i = 0;
+						foreach ( $list as $key => $value ) {
+						$i ++;
+					?>
+					<tr>
+						<td><?=$i?></td>
+						<td><?=$value['type_name']?></td>
+						<!--<td><?=$value['url']?></td>-->
+						<td><?=$value['pnumber']?></td>
+					</tr>
+					<?php
+							}
+						}
+					?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

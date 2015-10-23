@@ -1,0 +1,127 @@
+* {
+	margin:0;
+	padding:0;
+	/*-moz-user-select:none;
+	-khtml-user-select:none;
+	user-select:none*/
+}
+form, ul, ol, li, dl, dt, dd, h1, h2, h3, h4, h5, p {
+	list-style:none outside none
+}
+a {
+	text-decoration:none;
+	/*color:#ccc;*/
+	outline:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	user-select:none;
+}
+a:hover {
+	text-decoration:underline;
+	color:#1298F4
+}
+a:focus {
+	-moz-outline:none;
+}
+a img {
+	border:none
+}
+body {
+	height:100%;
+	font:12px/1.8 Microsoft YaHei, simsong;
+	height:100%;
+	overflow:hidden
+}
+
+.ibody {
+	overflow-y:auto;
+	background-color:#f5fafd;
+}
+
+/* my */
+.container-fluid-2 {
+	margin:0 -2px -2px -2px;
+	border:none;
+	padding:0;
+}
+label, input, button, select, textarea {
+	font-family:Verdana,Arial,Helvetica,AppleGothic,sans-serif;
+	font-size:12px;
+	font-weight:normal;
+	line-height:20px
+}
+input, button, select, textarea {
+	font-family:Verdana,Arial,Helvetica,AppleGothic,sans-serif;
+}
+input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+	font-size:12px;
+	/*height:14px;*/
+}
+textarea {
+	font-size:12px;
+	height:60px;
+}
+select {
+	font-size:12px;
+	height:24px;
+	padding: 2px 6px;
+}
+.input-xlarge-s {
+	width:284px;
+}
+.btn {
+	font-size:12px;
+	line-height:18px;
+}
+.btn-mini {
+	padding:1px 6px;
+	font-size:12px;
+}
+.form-horizontal .control-group {
+	margin-bottom:10px;
+}
+.form-horizontal .control-group-first {
+	padding-top:10px;
+}
+.form-horizontal .control-group-last {
+	margin-bottom:45px;
+}
+.form-horizontal .control-group-btn {
+	margin-bottom:0px;
+	background-color:#dfeef6;
+	border-top:1px solid #e5e5e5;
+	padding-top:6px;
+	padding-bottom:6px;
+}
+.form-horizontal .control-label {
+	width:130px;
+}
+.form-horizontal .controls {
+	margin-left:150px;
+}
+.form-horizontal .controls-2 {
+	padding-top:5px;
+}
+.form-horizontal .controls-btn {
+	float:right;
+	padding-right:10px;
+}
+.navbar-fixed-btn {
+	text-align:right;
+	padding:6px 10px 6px 0;
+	background-color:#dfeef6;
+	border-top:1px solid #e5e5e5;
+}
+.pagination ul>li>a, .pagination ul>li>span {
+	padding:2px 12px;
+	line-height:12px;
+}
+.nav-tabs>li>a {
+	padding-top:4px;
+	padding-bottom:4px;
+	line-height:20px;
+}
+.nav-tabs>.active>a, .nav-tabs>.active>a:hover {
+	background-color:#f5fafd;
+}
+

@@ -1,0 +1,68 @@
+<title>Admin Login</title>
+
+<script type="text/javascript">
+jQuery(function($) {
+	$('#form-admin-login').validate({
+		submitHandler:function(form){
+			submitAdminLogin();
+		},
+    	rules: {
+    		username: {
+                required: true
+            },
+            password: {
+                required: true
+            }
+        },
+		messages: {
+			username: 'Please enter the account number.',
+			password: 'Please enter a password.'
+		}
+    });
+	
+	var submitAdminLogin = function(){
+		var username = $('#input-username').val();
+		var password = $('#input-password').val();
+		
+		Utils.ajaxPost('admin.php', {
+			username: username,
+			password: password
+		}, function(res){
+			//alert(JSON.stringify(res));
+			if(!res.success){
+				alert(res.msg);
+				return false;
+			}
+			Utils.location('admin.php/backend');
+		});
+	};
+});
+</script>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<h3>Admin Login</h3>
+			<form class="form-horizontal" id="form-admin-login">
+				
+				<div class="control-group">
+					<label class="control-label" for="input-username">Username</label>
+					<div class="controls">
+						<input id="input-username" name="username" type="text" value="admin" readonly="readonly" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="input-password">Password</label>
+					<div class="controls">
+						<input id="input-password" name="password" type="password" value="" />
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn btn-primary">Login</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
