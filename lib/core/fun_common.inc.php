@@ -1,5 +1,23 @@
 <?php
 
+function isLocal() {
+	if(isset($_GET['debug']) && intval($_GET['debug']) == 1){
+		return true;
+	}
+	$httpHost = strtolower($_SERVER['HTTP_HOST']);
+	if(stristr($httpHost, "localhost") != false || stristr($httpHost, "8080") != false){
+		return true;
+	}
+	return false;
+}
+
+function out($text, $live = true) {
+	header("Content-Type:text/html;charset=utf-8");
+	//if (isLocal() == true || $live == false) {
+	echo '<pre>' . $text . '</pre>';
+	//}
+}
+
 /**
  * 日志记录
  */

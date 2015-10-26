@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50529
 File Encoding         : 65001
 
-Date: 2015-10-23 11:25:22
+Date: 2015-10-26 09:36:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -73,7 +73,7 @@ CREATE TABLE `hhwechat_profile` (
   `uid` int(11) NOT NULL DEFAULT '0',
   `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `address` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `postcode` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `num1` int(11) DEFAULT '0',

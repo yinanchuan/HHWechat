@@ -51,7 +51,7 @@ function getWxSnsapiUserinfo($code = null, $state = null) {
 		$url .= "&secret=$appSecret";
 		$url .= "&code=$code";
 		$url .= "&grant_type=authorization_code";
-		$response = json_decode ( httpGet ( $url ), true );
+		$response = json_decode ( HttpHelper::httpGet ( $url ), true );
 		if(isset($response['errcode'])){
 			die('getWxSnsapiUserinfo - ' . $response['errmsg']);
 		}
@@ -66,7 +66,7 @@ function getWxSnsapiUserinfo($code = null, $state = null) {
 		
 		//通过access_token和openid拉取用户信息
 		$url = "https://api.weixin.qq.com/sns/userinfo?access_token={$access_token}&openid={$openid}&lang=zh_CN";
-		$response = json_decode ( httpGet ( $url ), true );
+		$response = json_decode ( HttpHelper::httpGet ( $url ), true );
 		if(isset($response['errcode'])){
 			die('getWxSnsapiUserinfo2 - ' . $response['errmsg']);
 		}
@@ -126,17 +126,10 @@ function saveWxSnsapiUserinfo($openid, $userinfo) {
 }
 
 function getWxOpenid($code = null, $state = null) {
-	if(isLocal() == true){
-		$openid = 'oxkwBj2qKhiQ2Spewqn4tq_YnpWU';
+	$openid = getWxOpenidFromSession();
+	if(isset($openid) && $openid != null){
 		return $openid;
 	}
-	
-	//优先从session中获取
-	if(isset($_SESSION[SESSION_OPENID])){
-		$openid = $_SESSION[SESSION_OPENID];
-		return $openid;
-	}
-	unset($_SESSION[SESSION_OPENID]);
 	
 	$appId = WX_APP_ID;
 	$appSecret = WX_APP_SECRET;
@@ -150,7 +143,7 @@ function getWxOpenid($code = null, $state = null) {
 		$url .= "&code=$code";
 		$url .= "&grant_type=authorization_code";
 		
-		$response = json_decode ( httpGet ( $url ), true );
+		$response = json_decode ( HttpHelper::httpGet ( $url ), true );
 		if(isset($response['errcode'])){
 			die('getWxOpenid - ' . $response['errmsg']);
 		}
@@ -166,7 +159,6 @@ function getWxOpenid($code = null, $state = null) {
 			exit;
 		}
 		
-		//TODO 不能直接使用ajax获取到openid,需要先URL重定向获取到openid或保存到session
 		return $openid;
 	}
 	
@@ -256,7 +248,7 @@ function getWxAccessToken_http() {
 	// 如果是企业号用以下URL获取access_token
 	// $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$appId&corpsecret=$appSecret";
 	$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$appSecret";
-	$res = json_decode ( httpGet ( $url ) );
+	$res = json_decode ( HttpHelper::httpGet ( $url ) );
 	$access_token = $res->access_token;
 	
 	return $access_token;
@@ -274,7 +266,7 @@ function updateWxUserinfo() {
 
 function getWxUserinfo($access_token, $openid, $updateUser = false) {
 	$url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$openid&lang=zh_CN";
-	$userinfo = json_decode ( httpGet ( $url ), true );
+	$userinfo = json_decode ( HttpHelper::httpGet ( $url ), true );
 	if(isset($userinfo['errcode'])){
 		die('GetWxUserinfo error [errcode:' . $userinfo['errcode'] . ']');
 	}
@@ -317,100 +309,6 @@ function getWxJssdk(&$p) {
 	$signPackage = $jssdk->GetSignPackage();
 	
 	$p['signPackage'] = $signPackage;
-}
-
-function httpGet($url) {
-	/* $curl = curl_init (); //需要服务器支持
-	curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt ( $curl, CURLOPT_TIMEOUT, 500 );
-	curl_setopt ( $curl, CURLOPT_SSL_VERIFYPEER, false );
-	curl_setopt ( $curl, CURLOPT_SSL_VERIFYHOST, false );
-	curl_setopt ( $curl, CURLOPT_URL, $url );
-
-	$res = curl_exec ( $curl );
-	curl_close ( $curl ); */
-	
-	$res = file_get_contents($url);
-
-	return $res;
-}
-
-/**
- * GET 请求
- * @param string $url
- */
-function http_get($url){
-	$oCurl = curl_init();
-	if(stripos($url,"https://") !== FALSE){
-		curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
-	}
-	curl_setopt($oCurl, CURLOPT_URL, $url);
-	curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1 );
-	$sContent = curl_exec($oCurl);
-	$aStatus = curl_getinfo($oCurl);
-	curl_close($oCurl);
-	if(intval($aStatus["http_code"]) == 200){
-		return $sContent;
-	}else{
-		return false;
-	}
-}
-
-/**
- * POST 请求
- * @param string $url
- * @param array $param
- * @param boolean $post_file 是否文件上传
- * @return string content
- */
-function http_post($url, $param, $post_file=false){
-	$oCurl = curl_init();
-	if(stripos($url,"https://")!==FALSE){
-		curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($oCurl, CURLOPT_SSLVERSION, 1); //CURL_SSLVERSION_TLSv1
-	}
-	if (is_string($param) || $post_file) {
-		$strPOST = $param;
-	} else {
-		$aPOST = array();
-		foreach($param as $key=>$val){
-			$aPOST[] = $key."=".urlencode($val);
-		}
-		$strPOST =  join("&", $aPOST);
-	}
-	curl_setopt($oCurl, CURLOPT_URL, $url);
-	curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1 );
-	curl_setopt($oCurl, CURLOPT_POST,true);
-	curl_setopt($oCurl, CURLOPT_POSTFIELDS,$strPOST);
-	$sContent = curl_exec($oCurl);
-	$aStatus = curl_getinfo($oCurl);
-	curl_close($oCurl);
-	if(intval($aStatus["http_code"])==200){
-		return $sContent;
-	}else{
-		return false;
-	}
-}
-
-function isLocal() {
-	if(isset($_GET['debug']) && intval($_GET['debug']) == 1){
-		return true;
-	}
-	$httpHost = strtolower($_SERVER['HTTP_HOST']);
-	if(stristr($httpHost, "localhost") != false || stristr($httpHost, "8080") != false){
-		return true;
-	}
-	return false;
-}
-
-function out($text, $live = true) {
-	header("Content-Type:text/html;charset=utf-8");
-	if (isLocal() || $live == false) {
-		echo '<pre>' . $text . '</pre>';
-	}
 }
 
 ?>

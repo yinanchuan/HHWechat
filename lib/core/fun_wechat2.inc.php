@@ -25,7 +25,7 @@ function getWxOpenid_2($code = null, $state = null) {
 		$url .= "&code=$code";
 		$url .= "&grant_type=authorization_code";
 
-		$response = json_decode ( httpGet ( $url ), true );
+		$response = json_decode ( HttpHelper::httpGet ( $url ), true );
 		if(isset($response['errcode'])){
 			die('getWxOpenid - ' . $response['errmsg']);
 		}
@@ -75,7 +75,7 @@ function getWxSnsapiUserinfo_2($code = null, $state = null) {
 		$url .= "&secret=$appSecret";
 		$url .= "&code=$code";
 		$url .= "&grant_type=authorization_code";
-		$response = json_decode ( httpGet ( $url ), true );
+		$response = json_decode ( HttpHelper::httpGet ( $url ), true );
 		if(isset($response['errcode'])){
 			die('getWxSnsapiUserinfo - ' . $response['errmsg']);
 		}
@@ -90,7 +90,7 @@ function getWxSnsapiUserinfo_2($code = null, $state = null) {
 
 		//通过access_token和openid拉取用户信息
 		$url = "https://api.weixin.qq.com/sns/userinfo?access_token={$access_token}&openid={$openid}&lang=zh_CN";
-		$response = json_decode ( httpGet ( $url ), true );
+		$response = json_decode ( HttpHelper::httpGet ( $url ), true );
 		if(isset($response['errcode'])){
 			die('getWxSnsapiUserinfo2 - ' . $response['errmsg']);
 		}

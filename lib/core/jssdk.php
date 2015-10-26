@@ -87,7 +87,7 @@ class JSSDK {
 		// 如果是企业号用以下 URL 获取 ticket
 		// $url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=$accessToken";
 		$url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
-		$response = json_decode ( $this->httpGet ( $url ), true );
+		$response = json_decode ( HttpHelper::httpGet ( $url ), true );
 		//if(isset($response['errcode'])){
 		//	die('getJsApiTicket_http - ' . $response['errmsg']);
 		//}
@@ -137,27 +137,11 @@ class JSSDK {
 		// 如果是企业号用以下URL获取access_token
 		// $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=$this->appId&corpsecret=$this->appSecret";
 		$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
-		$response = json_decode ( $this->httpGet ( $url ), true );
+		$response = json_decode ( HttpHelper::httpGet ( $url ), true );
 		//if(isset($response['errcode'])){
 		//	die('getAccessToken_http - ' . $response['errmsg']);
 		//}
 		$access_token = $response['access_token'];
 		return $access_token;
-	}
-	
-	private function httpGet($url) {
-		/* $curl = curl_init ();
-		curl_setopt ( $curl, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt ( $curl, CURLOPT_TIMEOUT, 500 );
-		curl_setopt ( $curl, CURLOPT_SSL_VERIFYPEER, false );
-		curl_setopt ( $curl, CURLOPT_SSL_VERIFYHOST, false );
-		curl_setopt ( $curl, CURLOPT_URL, $url );
-		
-		$res = curl_exec ( $curl );
-		curl_close ( $curl ); */
-		
-		$res = file_get_contents($url);
-		
-		return $res;
 	}
 }
